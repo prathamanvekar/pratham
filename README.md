@@ -3,9 +3,9 @@
 My personal portfolio. It is mostly a grid of text, custom animations, and some charts designed to convince visitors I know how to type code.
 
 ## Tech Stack
-- **React + TS + Vite** (because Webpack is a legacy hazard)
-- **Tailwind CSS** (for styling without leaving HTML)
-- **GSAP & Framer Motion** (for smooth motions that hide layout lag)
+- **React + TS + Vite** 
+- **Tailwind CSS** 
+- **GSAP & Framer Motion** 
 - **GitHub API** (to prove I commit things on weekends)
 
 ## Running Locally
