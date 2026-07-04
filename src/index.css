@@ -1,0 +1,474 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import "tailwindcss";
+
+html {
+  font-size: 19px;
+}
+
+:root {
+  --color-bg: #181818;
+  --color-text: #efefef;
+  --color-accent: #ffffff;
+  --color-muted: #8e8e8f;
+  --color-link: #bd93f9;
+  --color-border: #1a1a1a;
+  --font-mono: "Space Mono", monospace;
+  --font-sans: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-accent-hover-bg: rgba(255, 255, 255, 0.03);
+  --color-accent-hover-border: rgba(255, 255, 255, 0.3);
+}
+
+html.light {
+  --color-bg: #fcfbfa;
+  --color-text: #121212;
+  --color-accent: #181818;
+  --color-muted: #6e6e70;
+  --color-link: #7c3aed;
+  --color-border: #e2e2e0;
+  --font-mono: "Space Mono", monospace;
+  --font-sans: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-accent-hover-bg: rgba(18, 18, 18, 0.03);
+  --color-accent-hover-border: rgba(18, 18, 18, 0.3);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 1024px) {
+  body {
+    overflow: hidden;
+  }
+}
+
+/* Unified, smooth theme transitions for background and border properties - only on desktop/capable screens when motion is preferred */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-property: background-color, border-color, text-decoration-color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+  }
+
+  /* Synchronize text color transitions on text-bearing elements to avoid nested container inheritance conflicts */
+  body,
+  p,
+  span,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  a,
+  button,
+  input,
+  textarea {
+    transition-property: color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+  }
+}
+
+/* Prevent double-transition race conditions on SVGs inheriting currentColor */
+svg,
+svg * {
+  transition: none !important;
+}
+
+/* Custom Selection */
+::selection {
+  background-color: var(--color-link);
+  color: var(--color-bg);
+}
+
+/* Strict website-wide no-scrollbar policy */
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+* {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+/* Prevent rough-notation SVGs from clipping sketch borders/circles */
+.rough-annotation {
+  overflow: visible !important;
+}
+
+/* Clean Underlined links with GPU-accelerated Slide Hover Animation */
+a.underlined-link {
+  color: var(--color-text);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+  padding-bottom: 2px;
+  display: inline-block;
+}
+
+a.underlined-link::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  border-radius: 1px;
+  background-color: var(--color-link);
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+a.underlined-link:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+/* Navigation Links slide animation */
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.3s ease;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2.5px;
+  border-radius: 1px;
+  background-color: var(--color-link);
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+.nav-link.active::before {
+  background-color: var(--color-accent);
+}
+
+/* Muted secondary link */
+a.muted-link {
+  color: var(--color-muted);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--color-muted);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+a.muted-link:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+/* Social icon smooth hover */
+.social-icon {
+  transition: color 0.3s ease, filter 0.3s ease !important;
+  will-change: filter, color;
+}
+
+.social-icon:hover {
+  color: var(--color-accent) !important;
+}
+
+/* Custom Cursor Bracket Corner styling */
+.cursor-bracket {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-color: var(--color-link);
+}
+
+.cursor-bracket-tl {
+  top: 0;
+  left: 0;
+  border-top: 1.5px solid var(--color-link);
+  border-left: 1.5px solid var(--color-link);
+}
+
+.cursor-bracket-tr {
+  top: 0;
+  right: 0;
+  border-top: 1.5px solid var(--color-link);
+  border-right: 1.5px solid var(--color-link);
+}
+
+.cursor-bracket-bl {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1.5px solid var(--color-link);
+  border-left: 1.5px solid var(--color-link);
+}
+
+.cursor-bracket-br {
+  bottom: 0;
+  right: 0;
+  border-bottom: 1.5px solid var(--color-link);
+  border-right: 1.5px solid var(--color-link);
+}
+
+/* Hide default cursor on desktop screens ONLY when custom cursor is active */
+@media (pointer: fine) {
+
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role="button"],
+  html.has-custom-cursor .cursor-pointer,
+  html.has-custom-cursor [class*="cursor-pointer"] {
+    cursor: none !important;
+  }
+}
+
+/* Neobrutalist name letter hover — clean block offset flash */
+.name-letter {
+  transition: color 0.15s ease;
+  position: relative;
+}
+
+.name-letter:hover {
+  color: var(--color-link);
+}
+
+/* Smooth social media icon transitions (stabilized parent, animated child span) */
+.social-icon-link {
+  color: var(--color-text-muted);
+  transition: color 0.3s ease;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon-link span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.3s ease;
+}
+
+.social-icon-link span svg {
+  display: block;
+}
+
+.social-icon-link:hover span {
+  transform: translateY(-2px);
+}
+
+.social-icon-link.github:hover {
+  color: var(--color-text);
+}
+
+.social-icon-link.github:hover span {
+  filter: drop-shadow(0 0 4px rgba(189, 147, 249, 0.6));
+}
+
+.social-icon-link.linkedin:hover {
+  color: #0077b5;
+}
+
+.social-icon-link.linkedin:hover span {
+  filter: drop-shadow(0 0 4px rgba(0, 119, 181, 0.6));
+}
+
+.social-icon-link.twitter:hover {
+  color: #1da1f2;
+}
+
+.social-icon-link.twitter:hover span {
+  filter: drop-shadow(0 0 4px rgba(29, 161, 242, 0.6));
+}
+
+.social-icon-link.email:hover {
+  color: #ea4335;
+}
+
+.social-icon-link.email:hover span {
+  filter: drop-shadow(0 0 4px rgba(234, 67, 53, 0.6));
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Scoped to AnimatedThemeToggler — the toggler sets the data-attribute and the variable only during a theme toggle. */
+html[data-magicui-theme-vt="active"]::view-transition-group(root) {
+  animation-duration: var(--magicui-theme-toggle-vt-duration);
+}
+
+/* ==========================================
+   Editorial Blog & Reading Layout Styles
+   ========================================== */
+
+/* Grid and Card Hover Micro-animations */
+.post-card-container {
+  position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.post-card-container:hover {
+  border-color: var(--color-link);
+  box-shadow: 0 4px 20px rgba(189, 147, 249, 0.08);
+}
+
+html.light .post-card-container:hover {
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.06);
+}
+
+.post-image-zoom {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.post-card-container:hover .post-image-zoom {
+  transform: scale(1.03);
+}
+
+/* Typography styles for article reading layout */
+.blog-content {
+  font-family: var(--font-mono), monospace;
+  color: var(--color-text);
+  line-height: 1.75;
+}
+
+/* Ensure proper high contrast readability in dark/light mode */
+.blog-content p {
+  color: rgba(239, 239, 239, 0.85);
+  /* dark theme fallback */
+  margin-bottom: 1.25rem;
+}
+
+html.light .blog-content p {
+  color: rgba(18, 18, 18, 0.85);
+  /* light theme fallback */
+}
+
+/* Elegant editorial titles and quotes using monospace */
+.font-editorial {
+  font-family: var(--font-mono), monospace;
+}
+
+.blog-heading {
+  font-family: var(--font-mono), monospace;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.35;
+}
+
+.blog-subheading {
+  font-family: var(--font-mono), monospace;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.blog-quote {
+  font-family: var(--font-mono), monospace;
+  font-style: italic;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  border-left: 3px solid var(--color-link);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  color: var(--color-text);
+}
+
+/* Blog code snippet styling */
+.blog-code-container {
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background-color: rgba(24, 24, 24, 0.6);
+  margin: 1.75rem 0;
+  overflow: hidden;
+  font-family: "Space Mono", monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+html.light .blog-code-container {
+  background-color: rgba(245, 244, 240, 0.7);
+  border-color: var(--color-border);
+}
+
+.blog-code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  background-color: rgba(0, 0, 0, 0.15);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+html.light .blog-code-header {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.blog-code-content {
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: "Space Mono", monospace;
+  color: #f8f8f2;
+}
+
+html.light .blog-code-content {
+  color: #1a1a1a;
+}
+
+/* Styled Lists for readability */
+.blog-list {
+  list-style-type: none;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 13px !important;
+}
+
+@media (min-width: 768px) {
+  .blog-list {
+    font-size: 14px !important;
+  }
+}
+
+.blog-list-item {
+  position: relative;
+  margin-bottom: 0.75rem;
+  padding-left: 1.25rem;
+  font-size: inherit;
+}
+
+.blog-list-item::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--color-link);
+}
