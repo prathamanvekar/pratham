@@ -557,21 +557,35 @@ function App() {
   }, [loading]);
 
   // Synchronize layout position and window scroll when the portfolio page is mounted
+  const prevPageRef = useRef<Page | null>(null);
+
   useEffect(() => {
-    if (currentPage === 'portfolio' && sectionsRef.current) {
-      window.scrollTo(0, 0);
-      if (containerRef.current) {
-        containerRef.current.scrollTop = 0;
-      }
-      if (!isMobile) {
-        gsap.set(sectionsRef.current, {
-          xPercent: -100 * activeIndex / 3
-        });
-      } else {
-        const sections = Array.from(sectionsRef.current.children) as HTMLElement[];
-        if (sections && sections[activeIndex]) {
-          sections[activeIndex].scrollIntoView({ block: 'start' });
-        }
+    const enteringPortfolio = currentPage === 'portfolio' && prevPageRef.current !== 'portfolio';
+    prevPageRef.current = currentPage;
+
+    if (currentPage !== 'portfolio' || !sectionsRef.current) return;
+
+    if (!isMobile) {
+      // Desktop: keep the horizontal track synced to activeIndex (nav clicks, page entry, etc.)
+      gsap.set(sectionsRef.current, {
+        xPercent: -100 * activeIndex / 3
+      });
+    }
+
+    // Mobile/tablet: only force-jump on fresh entry into the portfolio page.
+    // Skip this on plain activeIndex updates caused by the scroll-tracking
+    // ScrollTrigger below, otherwise every natural scroll gets yanked back
+    // to a section top, feeling like scroll-snapping.
+    if (!enteringPortfolio) return;
+
+    window.scrollTo(0, 0);
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0;
+    }
+    if (isMobile) {
+      const sections = Array.from(sectionsRef.current.children) as HTMLElement[];
+      if (sections && sections[activeIndex]) {
+        sections[activeIndex].scrollIntoView({ block: 'start' });
       }
     }
   }, [currentPage, activeIndex, isMobile]);

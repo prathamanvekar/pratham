@@ -30,3 +30,6 @@ dist-ssr
 # Claude IDE files
 .claude/
 
+# Installers accidentally dropped in assets
+*.exe
+
