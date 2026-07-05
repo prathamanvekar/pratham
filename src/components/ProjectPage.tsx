@@ -15,6 +15,7 @@ import Rssgen from './projects/Rssgen';
 interface ProjectPageProps {
   slug: string;
   layoutSource: 'home' | 'projects';
+  onBack: () => void;
 }
 
 const projectComponents: Record<
@@ -35,7 +36,7 @@ const projectComponents: Record<
   rssgen: Rssgen,
 };
 
-const ProjectPage = ({ slug, layoutSource }: ProjectPageProps) => {
+const ProjectPage = ({ slug, layoutSource, onBack }: ProjectPageProps) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
@@ -50,7 +51,21 @@ const ProjectPage = ({ slug, layoutSource }: ProjectPageProps) => {
     );
   }
 
-  return <TargetComponent layoutSource={layoutSource} />;
+  return (
+    <div className="w-full min-h-screen flex flex-col justify-between">
+      <TargetComponent layoutSource={layoutSource} />
+      
+      {/* Back button at the bottom of the page on mobile */}
+      <div className="w-full flex justify-center pb-24 pt-4 lg:hidden">
+        <button
+          onClick={onBack}
+          className="cursor-pointer bg-transparent border border-border/30 hover:border-accent/60 text-muted hover:text-accent transition-all duration-200 font-mono text-xs px-6 py-2.5 rounded-sm"
+        >
+          ← back
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default ProjectPage;

@@ -130,14 +130,14 @@ const SectionTwo = () => {
         const contribRes = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}`);
         const contribData = await contribRes.json();
         const contributions = contribData.contributions;
-        
+
         let filteredContributions = null;
         let streakStr = null;
         if (Array.isArray(contributions)) {
           const today = new Date();
           const oneYearAgo = new Date();
           oneYearAgo.setDate(today.getDate() - 365);
-          
+
           const filtered = contributions.filter((day: any) => {
             const d = new Date(day.date);
             return d >= oneYearAgo && d <= today;
@@ -160,10 +160,10 @@ const SectionTwo = () => {
           const yesterday = new Date();
           yesterday.setDate(yesterday.getDate() - 1);
           const yesterdayStr = getLocalDateString(yesterday);
-          
+
           let hasActivity = false;
           let startIndex = 0;
-          
+
           for (let i = 0; i < sorted.length; i++) {
             if (sorted[i].date === todayStr && sorted[i].count > 0) {
               hasActivity = true;
@@ -176,7 +176,7 @@ const SectionTwo = () => {
               break;
             }
           }
-          
+
           let streak = 0;
           if (hasActivity) {
             for (let i = startIndex; i < sorted.length; i++) {
@@ -193,14 +193,14 @@ const SectionTwo = () => {
         // 3. Fetch repositories list for Stars, Languages, and Top Starred Repositories
         const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
         const repos = await reposRes.json();
-        
+
         let totalStars = 0;
         let sortedLangs: string[] = [];
         let topRepos: any[] = [];
-        
+
         if (Array.isArray(repos)) {
           totalStars = repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
-          
+
           const langMap: { [key: string]: number } = {};
           repos.forEach(repo => {
             if (repo.language) {
@@ -267,7 +267,7 @@ const SectionTwo = () => {
   return (
     <section className="w-full lg:w-screen h-auto lg:h-screen lg:flex-shrink-0 flex items-center justify-center px-6 md:px-12 lg:px-20 pt-10 md:pt-12 lg:pt-24 pb-6 md:pb-8 lg:pb-8 relative overflow-hidden lg:overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 w-full max-w-[76rem] h-auto lg:max-h-[85vh] lg:overflow-y-auto lg:no-scrollbar">
-        
+
         {/* Left Column - Skills */}
         <div className="col-span-1 lg:col-span-5 flex flex-col justify-start space-y-6">
           <div className="space-y-4">
@@ -275,23 +275,23 @@ const SectionTwo = () => {
               technical skills
               <DrawingLine direction="horizontal" className="bottom-0 left-0 text-border/40" delay={0.4} />
             </div>
-            
+
             <div className="space-y-4 font-mono text-xs md:text-sm">
               <div>
                 <span className="text-xs uppercase text-muted block mb-0.5">languages</span>
                 <span className="text-accent">go, python, c, c++, typescript, sql, bash</span>
               </div>
-              
+
               <div>
                 <span className="text-xs uppercase text-muted block mb-0.5">frameworks</span>
                 <span className="text-text">fastapi, pytorch, nodejs, react, genai / agents, gin</span>
               </div>
-              
+
               <div>
                 <span className="text-xs uppercase text-muted block mb-0.5">databases</span>
                 <span className="text-text">postgresql, mongodb, turso / sqlite, mysql, redis</span>
               </div>
-              
+
               <div>
                 <span className="text-xs uppercase text-muted block mb-0.5">tools & workflow</span>
                 <span className="text-text">git, docker, linux</span>
@@ -335,13 +335,13 @@ const SectionTwo = () => {
 
         {/* Right Column - GitHub Data */}
         <div className="col-span-1 lg:col-span-7 flex flex-col justify-start space-y-6 text-xs md:text-sm text-muted font-normal lowercase leading-relaxed">
-          
+
           <div className="space-y-4">
             <div className="text-sm font-semibold tracking-wider text-accent uppercase font-mono pb-2 relative max-w-max">
               github metrics
               <DrawingLine direction="horizontal" className="bottom-0 left-0 text-border/40" delay={0.5} />
             </div>
-            
+
             <div className="grid grid-cols-3 gap-6 font-mono">
               <div>
                 <span className="text-xs uppercase text-muted block mb-0.5">repositories</span>
@@ -401,10 +401,10 @@ const SectionTwo = () => {
                   featuredRepos.map((repo) => (
                     <div key={repo.name} className="text-xs">
                       <div className="flex justify-between items-baseline gap-2">
-                        <a 
-                          href={repo.url} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                        <a
+                          href={repo.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="underlined-link font-medium truncate max-w-[80%]"
                           title={repo.name}
                         >
@@ -463,9 +463,9 @@ const getLanguageIcon = (lang: string) => {
 
   if (url) {
     return (
-      <img 
-        src={url} 
-        alt={lang} 
+      <img
+        src={url}
+        alt={lang}
         className="w-4 h-4 object-contain"
         onError={(e) => {
           (e.target as HTMLElement).style.display = 'none';

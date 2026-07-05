@@ -1,5 +1,6 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { ArrowLeft } from 'lucide-react';
 
 export interface StaggeredMenuItem {
   label: string;
@@ -29,6 +30,7 @@ export interface StaggeredMenuProps {
   onItemClick?: (link: string) => void;
   onBack?: () => void;
   showBack?: boolean;
+  headerActions?: React.ReactNode;
 }
 
 export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
@@ -49,7 +51,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   onMenuClose,
   onItemClick,
   onBack,
-  showBack = false
+  showBack = false,
+  headerActions = null
 }: StaggeredMenuProps) => {
   const [open, setOpen] = useState(false);
   const openRef = useRef(false);
@@ -385,6 +388,18 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     };
   }, [closeOnClickAway, open, closeMenu]);
 
+  React.useEffect(() => {
+    if (!open) {
+      const activeEl = document.activeElement;
+      if (activeEl && panelRef.current && panelRef.current.contains(activeEl)) {
+        (activeEl as HTMLElement).blur();
+        if (toggleBtnRef.current) {
+          toggleBtnRef.current.focus();
+        }
+      }
+    }
+  }, [open]);
+
   return (
     <div
       className={`sm-scope z-40 ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden' : 'w-full h-full'}`}
@@ -423,61 +438,67 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           className="staggered-menu-header absolute top-0 left-0 w-full flex items-center justify-between p-[1.5em_2em] bg-transparent pointer-events-none z-20"
           aria-label="Main navigation header"
         >
-          <div className="sm-logo flex items-center select-none pointer-events-auto gap-4" aria-label="Logo">
-            {/* Standard minimalist text logo */}
-            <span className="font-mono text-sm font-bold tracking-tight lowercase">pratham</span>
-            {showBack && onBack && (
-              <div className="flex items-center gap-3 font-mono text-xs">
-                <span className="text-muted/30">|</span>
+          <div className="sm-logo flex items-center select-none pointer-events-auto" aria-label="Logo">
+            {/* Standard minimalist text logo / back button */}
+            {!showBack ? (
+              <span className="font-mono text-sm font-bold tracking-tight lowercase">pratham</span>
+            ) : (
+              onBack && (
                 <button
                   onClick={onBack}
-                  className="cursor-pointer bg-transparent border-none p-0 outline-none text-muted hover:text-accent font-mono transition-colors duration-200"
+                  className="cursor-pointer bg-transparent border-none p-0 outline-none text-muted hover:text-accent flex items-center gap-2 transition-colors duration-200"
+                  aria-label="Go back"
                 >
-                  ← back
+                  <ArrowLeft size={16} strokeWidth={2.5} />
+                  <span className="font-mono text-sm font-bold tracking-tight lowercase">back</span>
                 </button>
-              </div>
+              )
             )}
           </div>
 
-          <button
-            ref={toggleBtnRef}
-            className={`sm-toggle relative inline-flex items-center gap-[0.3rem] bg-transparent border-0 cursor-pointer font-medium leading-none overflow-visible pointer-events-auto`}
-            style={{ color: 'var(--color-text)' }}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            aria-controls="staggered-menu-panel"
-            onClick={toggleMenu}
-            type="button"
-          >
-            <span
-              ref={textWrapRef}
-              className="sm-toggle-textWrap relative inline-block h-[1em] overflow-hidden whitespace-nowrap w-[var(--sm-toggle-width,auto)] min-w-[var(--sm-toggle-width,auto)] font-mono text-xs lowercase"
-              aria-hidden="true"
+          <div className="flex items-center gap-3 font-mono text-xs lowercase pointer-events-auto">
+            {headerActions}
+            {headerActions && <span className="text-muted/30 font-normal">|</span>}
+            <button
+              ref={toggleBtnRef}
+              className={`sm-toggle relative inline-flex items-center gap-[0.3rem] bg-transparent border-0 cursor-pointer font-medium leading-none overflow-visible`}
+              style={{ color: 'var(--color-text)' }}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              aria-controls="staggered-menu-panel"
+              onClick={toggleMenu}
+              type="button"
             >
-              <span ref={textInnerRef} className="sm-toggle-textInner flex flex-col leading-none">
-                {textLines.map((l, i) => (
-                  <span className="sm-toggle-line block h-[1em] leading-none" key={i}>
-                    {l}
-                  </span>
-                ))}
+              <span
+                ref={textWrapRef}
+                className="sm-toggle-textWrap relative inline-block h-[1em] overflow-hidden whitespace-nowrap w-[var(--sm-toggle-width,auto)] min-w-[var(--sm-toggle-width,auto)] font-mono text-xs lowercase"
+                aria-hidden="true"
+              >
+                <span ref={textInnerRef} className="sm-toggle-textInner flex flex-col leading-none">
+                  {textLines.map((l, i) => (
+                    <span className="sm-toggle-line block h-[1em] leading-none" key={i}>
+                      {l}
+                    </span>
+                  ))}
+                </span>
               </span>
-            </span>
 
-            <span
-              ref={iconRef}
-              className="sm-icon relative w-[12px] h-[12px] shrink-0 inline-flex items-center justify-center [will-change:transform]"
-              aria-hidden="true"
-            >
               <span
-                ref={plusHRef}
-                className="sm-icon-line absolute left-1/2 top-1/2 w-full h-[1.5px] bg-current rounded-[1px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
-              />
-              <span
-                ref={plusVRef}
-                className="sm-icon-line sm-icon-line-v absolute left-1/2 top-1/2 w-full h-[1.5px] bg-current rounded-[1px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
-              />
-            </span>
-          </button>
+                ref={iconRef}
+                className="sm-icon relative w-[12px] h-[12px] shrink-0 inline-flex items-center justify-center [will-change:transform]"
+                aria-hidden="true"
+              >
+                <span
+                  ref={plusHRef}
+                  className="sm-icon-line absolute left-1/2 top-1/2 w-full h-[1.5px] bg-current rounded-[1px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
+                />
+                <span
+                  ref={plusVRef}
+                  className="sm-icon-line sm-icon-line-v absolute left-1/2 top-1/2 w-full h-[1.5px] bg-current rounded-[1px] -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
+                />
+              </span>
+            </button>
+          </div>
         </header>
 
         <aside
@@ -485,6 +506,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           ref={panelRef}
           className="staggered-menu-panel absolute top-0 right-0 h-full flex flex-col p-[6em_2em_2em_2em] overflow-y-auto z-10 pointer-events-auto"
           aria-hidden={!open}
+          inert={!open ? true : undefined}
         >
           <div className="sm-panel-inner flex-1 flex flex-col justify-center">
             <ul

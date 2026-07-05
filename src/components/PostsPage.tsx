@@ -64,7 +64,21 @@ const PostsPage = ({ currentPostSlug, onNavigatePost }: PostsPageProps) => {
   if (activePost) {
     const PostComponent = postComponents[activePost.slug];
     if (PostComponent) {
-      return <PostComponent />;
+      return (
+        <div className="w-full min-h-screen flex flex-col justify-between">
+          <PostComponent />
+          
+          {/* Back button at the bottom of the page on mobile */}
+          <div className="w-full flex justify-center pb-24 pt-4 lg:hidden">
+            <button
+              onClick={() => onNavigatePost && onNavigatePost(null)}
+              className="cursor-pointer bg-transparent border border-border/30 hover:border-accent/60 text-muted hover:text-accent transition-all duration-200 font-mono text-xs px-6 py-2.5 rounded-sm"
+            >
+              ← back
+            </button>
+          </div>
+        </div>
+      );
     }
   }
 

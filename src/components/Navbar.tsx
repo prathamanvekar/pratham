@@ -197,17 +197,15 @@ const Navbar = ({
               setCurrentPage(link as NavPage);
             }
           }}
+          headerActions={
+            <button 
+              onClick={toggleTheme}
+              className="hover:text-accent text-muted transition-colors cursor-pointer font-mono text-xs lowercase bg-transparent border-none p-0 outline-none flex items-center h-[24px]"
+            >
+              {theme === 'dark' ? 'light' : 'dark'}
+            </button>
+          }
         />
-
-        {/* Floating Theme toggler next to mobile menu button */}
-        <div className="absolute top-[1.45em] right-[6rem] pointer-events-auto flex items-center h-[24px]">
-          <button 
-            onClick={toggleTheme}
-            className="hover:text-accent text-muted transition-colors cursor-pointer font-mono text-xs lowercase bg-transparent border-none p-0 outline-none"
-          >
-            {theme === 'dark' ? 'light' : 'dark'}
-          </button>
-        </div>
       </nav>
     );
   }

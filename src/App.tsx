@@ -864,6 +864,7 @@ function App() {
                   <ProjectPage
                     slug={currentProject}
                     layoutSource={navigateSource}
+                    onBack={navigateBack}
                   />
                 </motion.div>
               )}
