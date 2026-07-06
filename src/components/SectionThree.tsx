@@ -18,21 +18,16 @@ const SectionThree = () => {
               <div>
                 <div className="flex justify-between items-baseline">
                   <span className="text-text font-mono">vishwakarma institute of technology</span>
-                  <span className="text-[11px] uppercase font-mono text-muted">pune</span>
+                  <span className="text-[10px] uppercase font-mono text-muted border border-border/25 rounded-sm px-2 py-0.5">pune</span>
                 </div>
                 <p className="text-muted text-xs mt-1">
                   bachelor of technology (b.tech) · 2023 – 2027
                 </p>
               </div>
 
-              <div>
-                <div className="flex justify-between items-baseline">
-                  <span className="text-text font-mono">cgpa</span>
-                  <span className="text-[11px] uppercase font-mono text-accent">8.98 / 10.0</span>
-                </div>
-                <p className="text-muted text-xs mt-1">
-                  consistent academic performance across all semesters.
-                </p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-accent text-xl md:text-2xl font-bold leading-none">8.98</span>
+                <span className="text-muted text-xs">/ 10.0 cgpa · consistent across all semesters</span>
               </div>
             </div>
           </div>
@@ -48,7 +43,7 @@ const SectionThree = () => {
               <div>
                 <div className="flex justify-between items-baseline">
                   <span className="text-text font-mono">ieee</span>
-                  <span className="text-[11px] uppercase font-mono text-muted">backend lead</span>
+                  <span className="text-[10px] uppercase font-mono text-muted border border-border/25 rounded-sm px-2 py-0.5">backend lead</span>
                 </div>
                 <p className="text-muted text-xs mt-1">
                   led the web development team to ship a robust inventory management system.
@@ -58,7 +53,7 @@ const SectionThree = () => {
               <div>
                 <div className="flex justify-between items-baseline">
                   <span className="text-text font-mono">ieee</span>
-                  <span className="text-[11px] uppercase font-mono text-muted">workshop instructor</span>
+                  <span className="text-[10px] uppercase font-mono text-muted border border-border/25 rounded-sm px-2 py-0.5">workshop instructor</span>
                 </div>
                 <p className="text-muted text-xs mt-1">
                   instructed an extensive deep dive in ai agents workshop during the early adoption phase.
@@ -68,7 +63,7 @@ const SectionThree = () => {
               <div>
                 <div className="flex justify-between items-baseline">
                   <span className="text-text font-mono">ieee</span>
-                  <span className="text-[11px] uppercase font-mono text-muted">executive member</span>
+                  <span className="text-[10px] uppercase font-mono text-muted border border-border/25 rounded-sm px-2 py-0.5">executive member</span>
                 </div>
                 <p className="text-muted text-xs mt-1">
                   contributed to the organization and execution of key technical events.
@@ -88,25 +83,31 @@ const SectionThree = () => {
               <DrawingLine direction="horizontal" className="bottom-0 left-0 text-border/40" delay={0.5} />
             </div>
             
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between items-baseline">
-                  <span className="text-text font-mono">top 150 – amazon ml challenge 2025</span>
-                  <span className="text-[11px] uppercase font-mono text-muted">national</span>
+            <div className="space-y-5">
+              <div className="flex gap-4">
+                <span className="text-accent text-2xl md:text-3xl font-bold leading-none shrink-0">150</span>
+                <div>
+                  <div className="flex justify-between items-baseline gap-3">
+                    <span className="text-text font-mono">amazon ml challenge 2025</span>
+                    <span className="text-[10px] uppercase font-mono text-muted border border-border/25 rounded-sm px-2 py-0.5 shrink-0">national</span>
+                  </div>
+                  <p className="text-muted text-xs mt-1">
+                    ranked among the top 150 out of 80,000+ participants nationwide, optimizing neural models to achieve minimal validation loss.
+                  </p>
                 </div>
-                <p className="text-muted text-xs mt-1">
-                  ranked among the top 150 out of 80,000+ participants nationwide, optimizing neural models to achieve minimal validation loss.
-                </p>
               </div>
 
-              <div>
-                <div className="flex justify-between items-baseline">
-                  <span className="text-text font-mono">top 4 – google's wow verse hackathon 2025</span>
-                  <span className="text-[11px] uppercase font-mono text-muted">international</span>
+              <div className="flex gap-4">
+                <span className="text-accent text-2xl md:text-3xl font-bold leading-none shrink-0">4</span>
+                <div>
+                  <div className="flex justify-between items-baseline gap-3">
+                    <span className="text-text font-mono">google's wow verse hackathon 2025</span>
+                    <span className="text-[10px] uppercase font-mono text-muted border border-border/25 rounded-sm px-2 py-0.5 shrink-0">international</span>
+                  </div>
+                  <p className="text-muted text-xs mt-1">
+                    selected among the top 4 teams globally; presented a production-ready solution to GDG Developer Relations.
+                  </p>
                 </div>
-                <p className="text-muted text-xs mt-1">
-                  selected among the top 4 teams globally; presented a production-ready solution to GDG Developer Relations.
-                </p>
               </div>
             </div>
           </div>
@@ -122,7 +123,7 @@ const SectionThree = () => {
               <div>
                 <div className="flex justify-between items-baseline">
                   <span className="text-text font-mono">ibm full stack developer certificate</span>
-                  <span className="text-[11px] uppercase font-mono text-muted">professional</span>
+                  <span className="text-[10px] uppercase font-mono text-muted border border-border/25 rounded-sm px-2 py-0.5">professional</span>
                 </div>
                 <p className="text-muted text-xs mt-1">
                   professional certification program covering frontend frameworks, backend servers, and containerized deployment pipelines.

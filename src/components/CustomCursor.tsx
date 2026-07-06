@@ -105,6 +105,7 @@ export const CustomCursor = () => {
   // Update container position and corner offsets in the render loop
   useEffect(() => {
     if (isTouchDevice.current) return;
+    if (!dotRef.current || !crosshairRef.current || !cursorRef.current) return;
 
     const getOffset = () => getContainingBlockOffset(containingBlockRef.current);
 
@@ -114,6 +115,8 @@ export const CustomCursor = () => {
     const setCrosshairY = gsap.quickTo(crosshairRef.current, 'y', { duration: 0.12, ease: 'power2.out' });
 
     const tick = () => {
+      if (!cursorRef.current) return;
+
       const { x: offsetX, y: offsetY } = getOffset();
       
       const curX = mousePos.current.x - offsetX;

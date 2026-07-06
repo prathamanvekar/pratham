@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-import { Tag, Calendar, Clock, Coffee } from 'lucide-react';
-import sslVsTlsImg from '../../assets/ssl vs tls.jpg';
+import { Tag, Coffee } from 'lucide-react';
 
 const SslVsTlsPost = () => {
   return (
@@ -13,38 +12,32 @@ const SslVsTlsPost = () => {
       className="w-full lg:w-screen h-auto lg:h-screen lg:flex-shrink-0 flex items-start justify-center px-6 md:px-12 lg:px-20 pt-14 lg:pt-18 pb-12 lg:pb-8 relative overflow-y-auto lg:overflow-hidden text-text"
     >
       <div className="w-full max-w-[48rem] h-auto lg:h-full lg:overflow-y-auto lg:no-scrollbar pt-4 pb-24 lg:pb-20">
-        
-        {/* Meta Info at the top */}
-        <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-muted mb-4 uppercase tracking-wider">
-          <span className="flex items-center gap-1.5 border border-border/30 rounded px-2 py-0.5 text-[10px]">
-            <Tag size={10} className="text-accent" />
-            Networking
-          </span>
-          <span className="flex items-center gap-1">
-            <Calendar size={11} />
-            July 4, 2026
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock size={11} />
-            4 min read
-          </span>
+
+        {/* Header as a terminal window, replacing the old hero image */}
+        <div className="rounded-lg border border-border/15 overflow-hidden mb-8">
+          <div className="flex items-center gap-2 pl-4 pr-4 py-2 border-b border-border/10">
+            <span className="pulse-dot" />
+            <span className="text-[10px] text-muted/50 font-mono lowercase">~/posts/ssl-and-tls.md</span>
+          </div>
+          <div className="px-5 py-7 md:px-8 md:py-9">
+            <div className="flex flex-wrap items-center gap-3 text-[10px] font-mono text-muted uppercase tracking-wider mb-4">
+              <span className="flex items-center gap-1.5 border border-border/25 rounded-sm px-2 py-0.5">
+                <Tag size={10} className="text-accent" />
+                Networking
+              </span>
+              <span>July 4, 2026</span>
+              <span className="text-muted/40">·</span>
+              <span>4 min read</span>
+            </div>
+
+            <motion.h1
+              layoutId="post-title-ssl-and-tls"
+              className="text-2xl md:text-3xl lg:text-4xl font-bold font-mono text-text leading-tight tracking-tight"
+            >
+              SSL and TLS (and the things around them)
+            </motion.h1>
+          </div>
         </div>
-
-        {/* Hero cover image scaled down (unconstrained borderless motion element) */}
-        <motion.img
-          layoutId="post-image-ssl-and-tls"
-          src={sslVsTlsImg}
-          alt="SSL and TLS"
-          className="w-full aspect-[16/10] sm:aspect-[21/9] lg:aspect-[2.5/1] rounded-2xl object-cover mb-6"
-        />
-
-        {/* Title below image */}
-        <motion.h1
-          layoutId="post-title-ssl-and-tls"
-          className="text-2xl md:text-3xl lg:text-4xl font-bold font-mono text-text mb-6 leading-tight tracking-tight"
-        >
-          SSL and TLS (and the things around them)
-        </motion.h1>
 
         {/* Content rendering */}
         <div className="blog-content mb-16 max-w-none">

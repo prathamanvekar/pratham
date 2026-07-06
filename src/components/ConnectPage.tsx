@@ -170,13 +170,13 @@ const LinkTile = ({ item }: { item: LinkItem }) => {
         target="_blank"
         rel="noopener noreferrer"
         data-cursor-snap
-        className="group flex items-center justify-between py-2 border-b border-border/10 hover:border-link/35 transition-colors duration-300 ease-out font-mono text-xs text-text select-none decoration-none"
+        className="group flex items-center justify-between py-1.5 border-b border-border/10 hover:border-link/35 transition-colors duration-300 ease-out font-mono text-sm text-text select-none decoration-none"
       >
         <div className="flex items-center gap-2.5 transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:translate-x-1.5">
-          <Icon 
-            size={13} 
-            className="transition-all duration-300 flex-shrink-0 opacity-60 group-hover:opacity-100" 
-            style={{ color: item.color }} 
+          <Icon
+            size={14}
+            className="transition-all duration-300 flex-shrink-0 opacity-60 group-hover:opacity-100"
+            style={{ color: item.color }}
           />
           <span className="font-bold tracking-wide transition-colors duration-200 group-hover:text-accent">
             {item.name}
@@ -184,7 +184,7 @@ const LinkTile = ({ item }: { item: LinkItem }) => {
         </div>
 
         <div className="flex items-center gap-2 transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-x-0.5">
-          <span className="text-[10px] text-muted/60 group-hover:text-text transition-colors duration-200">
+          <span className="text-xs text-muted/60 group-hover:text-text transition-colors duration-200">
             {item.handle}
           </span>
           <span className="text-muted/30 group-hover:text-link transition-colors duration-300 overflow-hidden flex items-center justify-center w-3 h-3">
@@ -232,10 +232,10 @@ export const ConnectPage = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="w-full lg:w-screen h-auto lg:h-screen lg:flex-shrink-0 flex items-start lg:items-center justify-center px-6 md:px-12 lg:px-20 pt-16 lg:pt-12 pb-12 lg:pb-8 relative overflow-y-auto lg:overflow-hidden text-text"
+      className="w-full lg:w-screen h-auto lg:h-screen lg:flex-shrink-0 flex items-start lg:items-center justify-center px-6 md:px-12 lg:px-20 pt-16 lg:pt-20 pb-12 lg:pb-6 relative overflow-y-auto lg:overflow-hidden text-text"
     >
       {/* Main Content Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 w-full max-w-[56rem] h-auto lg:max-h-[85vh] lg:overflow-y-auto lg:no-scrollbar relative z-10 pt-10 lg:pt-0">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 w-full max-w-[68rem] h-auto lg:max-h-[80vh] lg:overflow-y-auto lg:no-scrollbar relative z-10 pt-10 lg:pt-0">
 
         {/* Left Column: Minimal Stare Graphic + Status */}
         <div className="col-span-1 lg:col-span-4 flex flex-col items-center lg:items-start justify-start lg:pt-2">
@@ -251,11 +251,11 @@ export const ConnectPage = () => {
               pixelColor="var(--color-bg)"
               animationStepDuration={0.25}
               className="rounded-xl"
-              style={{ width: 144, height: 144 }}
+              style={{ width: 180, height: 180 }}
               firstContent={
                 <img
                   src={yujiGif}
-                  alt="yujistare"
+                  alt="animated character giving an intense stare, revealed on hover"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   draggable={false}
                 />
@@ -299,7 +299,7 @@ export const ConnectPage = () => {
                 <motion.span
                   key={index}
                   variants={textLetter}
-                  className="text-[10px] md:text-xs text-muted/65 font-mono tracking-wider lowercase inline-block"
+                  className="text-xs md:text-sm text-muted/65 font-mono tracking-wider lowercase inline-block"
                 >
                   {char === ' ' ? ' ' : char}
                 </motion.span>
@@ -315,24 +315,24 @@ export const ConnectPage = () => {
               transition={{ duration: 0.4, delay: 0.55, ease: 'easeOut' }}
               className="flex flex-col items-start gap-1.5"
             >
-              <div className="flex items-center gap-2 text-[10px] font-mono text-muted">
+              <div className="flex items-center gap-2 text-xs font-mono text-muted">
                 <span className="flex items-center justify-center w-4 h-4 flex-shrink-0">
                   <span className="relative flex h-1.5 w-1.5">
-                    <span 
-                      className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60" 
+                    <span
+                      className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
                       style={{ backgroundColor: 'var(--color-link)' }}
                     />
-                    <span 
-                      className="relative inline-flex rounded-full h-1.5 w-1.5" 
+                    <span
+                      className="relative inline-flex rounded-full h-1.5 w-1.5"
                       style={{ backgroundColor: 'var(--color-link)' }}
                     />
                   </span>
                 </span>
                 open to freelance &amp; internships
               </div>
-              <div className="flex items-center gap-2 text-[9px] text-muted/70 font-mono">
+              <div className="flex items-center gap-2 text-[11px] text-muted/70 font-mono">
                 <span className="flex items-center justify-center w-4 h-4 flex-shrink-0">
-                  <MapPin size={10} className="text-muted/50" />
+                  <MapPin size={11} className="text-muted/50" />
                 </span>
                 pune, india
                 <span className="text-muted/30">·</span>
@@ -344,14 +344,14 @@ export const ConnectPage = () => {
 
         {/* Right Column: Contact Card + Grouped Directory */}
         <div className="col-span-1 lg:col-span-8 flex flex-col justify-start">
-          <div className="space-y-5 lg:space-y-6">
+          <div className="space-y-4 lg:space-y-4">
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: 0.08, ease: 'easeOut' }}
               className="relative max-w-max"
             >
-              <div className="text-[10px] font-bold tracking-widest text-muted uppercase font-mono pb-2 relative max-w-max">
+              <div className="text-xs font-bold tracking-widest text-muted uppercase font-mono pb-2 relative max-w-max">
                 connect
                 <DrawingLine direction="horizontal" className="bottom-0 left-0 text-border/40" delay={0.15} />
               </div>
@@ -361,7 +361,7 @@ export const ConnectPage = () => {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.14, ease: 'easeOut' }}
-              className="-mt-3.5 text-xs text-muted font-mono leading-relaxed max-w-lg"
+              className="-mt-2 text-sm text-muted font-mono leading-relaxed max-w-xl"
             >
               always down to talk shop — systems design, ai agents, competitive programming, or your next big idea. reach out, i reply fast.
             </motion.p>
@@ -371,15 +371,15 @@ export const ConnectPage = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.22, ease: 'easeOut' }}
-              className="w-full max-w-lg rounded-lg border border-border/10 overflow-hidden bg-transparent"
+              className="w-full max-w-xl rounded-lg border border-border/10 overflow-hidden bg-transparent"
             >
-              <div className="flex items-center gap-1.5 px-4 py-2 border-b border-border/10 bg-transparent">
-                <span className="w-1.5 h-1.5 rounded-full bg-muted/20" />
-                <span className="w-1.5 h-1.5 rounded-full bg-muted/20" />
-                <span className="w-1.5 h-1.5 rounded-full bg-muted/20" />
-                <span className="ml-2 text-[9px] text-muted/50 font-mono lowercase">contact.sh</span>
+              <div className="flex items-center gap-1 pl-3 pr-4 py-2 border-b border-border/10 bg-transparent">
+                <span className="w-1 h-1 rounded-full bg-muted/35" />
+                <span className="w-1 h-1 rounded-full bg-muted/35" />
+                <span className="w-1 h-1 rounded-full bg-muted/35" />
+                <span className="ml-1 text-[10px] text-muted/50 font-mono lowercase">contact.sh</span>
               </div>
-              <div className="px-4 py-3 font-mono text-[10px] md:text-[11px] space-y-2">
+              <div className="px-5 py-3.5 lg:py-2.5 font-mono text-xs md:text-sm space-y-2 lg:space-y-1.5">
                 <div>
                   <span className="text-link">$</span> <span className="text-muted">whoami</span>
                 </div>
@@ -442,15 +442,15 @@ export const ConnectPage = () => {
             </motion.div>
 
             {/* Grouped directory list: 2-column layout on desktop */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 pt-1 w-full max-w-lg">
-              
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 lg:gap-y-3 pt-0 w-full max-w-xl">
+
               {/* Elsewhere: socials */}
-              <div className="space-y-2">
+              <div className="space-y-2 lg:space-y-1">
                 <motion.div
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: 0.28, ease: 'easeOut' }}
-                  className="text-[9px] font-bold tracking-widest text-muted uppercase font-mono border-b border-border/5 pb-1"
+                  className="text-[10px] font-bold tracking-widest text-muted uppercase font-mono border-b border-border/5 pb-1"
                 >
                   elsewhere
                 </motion.div>
@@ -458,7 +458,7 @@ export const ConnectPage = () => {
                   variants={gridContainer}
                   initial="hidden"
                   animate="visible"
-                  className="flex flex-col gap-1"
+                  className="flex flex-col gap-0"
                 >
                   {socialLinks.map((item) => (
                     <LinkTile key={item.name} item={item} />
@@ -467,12 +467,12 @@ export const ConnectPage = () => {
               </div>
 
               {/* Competitive & code profiles */}
-              <div className="space-y-2">
+              <div className="space-y-2 lg:space-y-1">
                 <motion.div
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: 0.34, ease: 'easeOut' }}
-                  className="text-[9px] font-bold tracking-widest text-muted uppercase font-mono border-b border-border/5 pb-1"
+                  className="text-[10px] font-bold tracking-widest text-muted uppercase font-mono border-b border-border/5 pb-1"
                 >
                   competitive &amp; code
                 </motion.div>
@@ -480,7 +480,7 @@ export const ConnectPage = () => {
                   variants={gridContainer}
                   initial="hidden"
                   animate="visible"
-                  className="flex flex-col gap-1"
+                  className="flex flex-col gap-0"
                 >
                   {codeLinks.map((item) => (
                     <LinkTile key={item.name} item={item} />

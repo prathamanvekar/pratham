@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import "tailwindcss";
 
 html {
@@ -12,8 +12,8 @@ html {
   --color-muted: #8e8e8f;
   --color-link: #bd93f9;
   --color-border: #1a1a1a;
-  --font-mono: "Space Mono", monospace;
-  --font-sans: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SpaceMono Nerd Font", "Space Mono", monospace;
+  --font-sans: "SpaceMono Nerd Font", "Space Mono", monospace;
   --color-accent-hover-bg: rgba(255, 255, 255, 0.03);
   --color-accent-hover-border: rgba(255, 255, 255, 0.3);
 }
@@ -25,8 +25,8 @@ html.light {
   --color-muted: #6e6e70;
   --color-link: #7c3aed;
   --color-border: #e2e2e0;
-  --font-mono: "Space Mono", monospace;
-  --font-sans: "Geist", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SpaceMono Nerd Font", "Space Mono", monospace;
+  --font-sans: "SpaceMono Nerd Font", "Space Mono", monospace;
   --color-accent-hover-bg: rgba(18, 18, 18, 0.03);
   --color-accent-hover-border: rgba(18, 18, 18, 0.3);
 }
@@ -49,37 +49,50 @@ body {
   }
 }
 
-/* Unified, smooth theme transitions for background and border properties - only on desktop/capable screens when motion is preferred */
+/* Smooth theme transitions, cheap on every device: registering the theme tokens as
+   animatable custom properties means one transition declaration on html crossfades every
+   consumer of var(--color-*) simultaneously, instead of a wildcard selector attaching its own
+   transition to every element in the DOM (that per-node style recalculation is what made
+   mobile/tablet toggling laggy once the desktop-only gate was removed).
+   Scoped to :not([data-magicui-theme-vt="active"]) so this never runs at the same time as the
+   desktop circular view-transition wipe below — that wipe already drives the entire visual change
+   on its own (the live DOM is hidden behind its snapshot), so double-animating here would be pure
+   main-thread cost fighting the compositor-driven wipe. */
+@property --color-bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #181818;
+}
+@property --color-text {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #efefef;
+}
+@property --color-accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffffff;
+}
+@property --color-muted {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #8e8e8f;
+}
+@property --color-link {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #bd93f9;
+}
+@property --color-border {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #1a1a1a;
+}
+
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  body {
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  *,
-  *::before,
-  *::after {
-    transition-property: background-color, border-color, text-decoration-color;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-  }
-
-  /* Synchronize text color transitions on text-bearing elements to avoid nested container inheritance conflicts */
-  body,
-  p,
-  span,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  a,
-  button,
-  input,
-  textarea {
-    transition-property: color;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
+  html:not([data-magicui-theme-vt="active"]) {
+    transition: --color-bg 0.3s ease, --color-text 0.3s ease, --color-accent 0.3s ease,
+      --color-muted 0.3s ease, --color-link 0.3s ease, --color-border 0.3s ease;
   }
 }
 
@@ -93,6 +106,16 @@ svg * {
 ::selection {
   background-color: var(--color-link);
   color: var(--color-bg);
+}
+
+/* Keyboard focus indicator — wins over Tailwind's outline-none (type+pseudo beats class specificity) so every interactive element keeps a visible ring for keyboard users, even where a component didn't add its own. */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* Strict website-wide no-scrollbar policy */
@@ -396,10 +419,18 @@ html.light .blog-content p {
   font-style: italic;
   font-size: 0.9rem;
   line-height: 1.6;
-  border-left: 3px solid var(--color-link);
-  padding-left: 1.25rem;
+  padding-left: 1.5rem;
   margin: 1.5rem 0;
   color: var(--color-text);
+  position: relative;
+}
+
+.blog-quote::before {
+  content: '>';
+  position: absolute;
+  left: 0;
+  color: var(--color-link);
+  font-style: normal;
 }
 
 /* Blog code snippet styling */
@@ -409,7 +440,7 @@ html.light .blog-content p {
   background-color: rgba(24, 24, 24, 0.6);
   margin: 1.75rem 0;
   overflow: hidden;
-  font-family: "Space Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   line-height: 1.5;
 }
@@ -437,7 +468,7 @@ html.light .blog-code-header {
 .blog-code-content {
   padding: 1rem;
   overflow-x: auto;
-  font-family: "Space Mono", monospace;
+  font-family: var(--font-mono);
   color: #f8f8f2;
 }
 
@@ -471,4 +502,20 @@ html.light .blog-code-content {
   position: absolute;
   left: 0;
   color: var(--color-link);
+}
+
+/* Pulsing status dot used in post terminal chrome headers */
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-link) 55%, transparent); opacity: 1; }
+  50%       { box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-link) 0%, transparent);  opacity: 0.7; }
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-link);
+  flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
 }

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search } from 'lucide-react';
+import { Search, ArrowUpRight } from 'lucide-react';
 import DrawingLine from './DrawingLine';
 
 export interface Project {
@@ -250,8 +250,9 @@ const ProjectsPage = ({ onNavigateProject }: ProjectsPageProps) => {
           transition={{ duration: 0.4 }}
           className="mb-8 pt-10"
         >
-          <div className="text-sm font-semibold tracking-wider text-accent uppercase font-mono pb-2 relative max-w-max">
+          <div className="text-sm font-semibold tracking-wider text-accent uppercase font-mono pb-2 relative max-w-max flex items-baseline gap-2">
             projects
+            <span className="text-muted normal-case tracking-normal">({projects.length})</span>
             <DrawingLine direction="horizontal" className="bottom-0 left-0 text-border/40" delay={0.2} />
           </div>
         </motion.div>
@@ -274,7 +275,7 @@ const ProjectsPage = ({ onNavigateProject }: ProjectsPageProps) => {
               placeholder="search projects..."
               value={query}
               onChange={e => handleQueryChange(e.target.value)}
-              className="w-full pl-8 pr-4 py-2 md:py-2.5 bg-transparent border border-border/25 hover:border-border/50 focus:border-accent/60 focus:outline-none rounded-sm font-mono text-xs text-text placeholder:text-muted/50 transition-all duration-200 focus:ring-1 focus:ring-accent/20"
+              className="w-full pl-8 pr-4 max-md:py-3.5 md:py-2.5 bg-transparent border border-border/25 hover:border-border/50 focus:border-accent/60 focus:outline-none rounded-sm font-mono text-xs text-text placeholder:text-muted/50 transition-all duration-200 focus:ring-1 focus:ring-accent/20"
             />
           </div>
 
@@ -284,7 +285,7 @@ const ProjectsPage = ({ onNavigateProject }: ProjectsPageProps) => {
               <button
                 key={tag}
                 onClick={() => handleTagChange(tag)}
-                className={`font-mono text-[11px] px-3 py-1.5 md:px-4 md:py-2 rounded-sm border transition-all duration-200 cursor-pointer outline-none ${activeTag === tag
+                className={`font-mono text-[11px] px-3 py-1.5 md:px-4 md:py-2 max-md:min-h-11 max-md:inline-flex max-md:items-center rounded-sm border transition-all duration-200 cursor-pointer outline-none ${activeTag === tag
                   ? 'border-accent text-accent bg-accent/5'
                   : 'border-border/25 text-muted hover:border-border/50 hover:text-text bg-transparent'
                   }`}
@@ -295,8 +296,8 @@ const ProjectsPage = ({ onNavigateProject }: ProjectsPageProps) => {
           </div>
         </motion.div>
 
-        {/* Project list */}
-        <div className="space-y-0 relative min-h-[300px]">
+        {/* Project directory: two-column on desktop, numbered like a listing */}
+        <div className="relative min-h-[300px]">
           <AnimatePresence mode="popLayout">
             {filtered.length === 0 ? (
               <motion.p
@@ -310,38 +311,31 @@ const ProjectsPage = ({ onNavigateProject }: ProjectsPageProps) => {
                 no projects match your search.
               </motion.p>
             ) : (
-              filtered.map((project, i) => (
-                <motion.div
-                  key={project.slug}
-                  layout
-                  initial={isInitial ? { opacity: 0, y: 10 } : { opacity: 0 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5, height: 0, overflow: 'hidden', padding: 0 }}
-                  transition={{
-                    layout: { type: 'spring', stiffness: 450, damping: 40 },
-                    opacity: { duration: isInitial ? 0.35 : 0.15 },
-                    y: { duration: isInitial ? 0.35 : 0.15 },
-                    height: { duration: 0.18 },
-                    delay: isInitial ? 0.12 + i * 0.06 : 0
-                  }}
-                  className="group py-5 relative block"
-                >
-                  {i === 0 && (
-                    <DrawingLine
-                      direction="horizontal"
-                      className="top-0 left-0 text-border/20"
-                      animate={isInitial}
-                      delay={0.12 + i * 0.06}
-                      duration={0.8}
-                    />
-                  )}
+              <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12">
+                {filtered.map((project, i) => (
+                  <motion.div
+                    key={project.slug}
+                    layout
+                    initial={isInitial ? { opacity: 0, y: 10 } : { opacity: 0 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5, height: 0, overflow: 'hidden', padding: 0 }}
+                    transition={{
+                      layout: { type: 'spring', stiffness: 450, damping: 40 },
+                      opacity: { duration: isInitial ? 0.35 : 0.15 },
+                      y: { duration: isInitial ? 0.35 : 0.15 },
+                      height: { duration: 0.18 },
+                      delay: isInitial ? 0.1 + i * 0.04 : 0
+                    }}
+                    onClick={() => onNavigateProject(project.slug)}
+                    className="group py-5 relative block border-b border-border/20 cursor-pointer"
+                    data-cursor-snap
+                  >
+                    <div className="flex items-baseline gap-3 mb-1.5">
+                      <span className="text-[11px] text-muted/40 font-mono flex-shrink-0 w-5">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
 
-                  <div className="flex justify-between items-baseline mb-2">
-                    {/* Title — shared element transition matches SectionOne + ProjectPage */}
-                    <button
-                      onClick={() => onNavigateProject(project.slug)}
-                      className="bg-transparent border-none p-0 outline-none cursor-pointer text-left"
-                    >
+                      {/* Title — shared element transition matches SectionOne + ProjectPage */}
                       <motion.h2
                         layoutId={`list-title-${project.slug}`}
                         layout="position"
@@ -350,24 +344,34 @@ const ProjectsPage = ({ onNavigateProject }: ProjectsPageProps) => {
                       >
                         {project.name}
                       </motion.h2>
-                    </button>
-                    <span className="text-[11px] text-muted font-mono flex-shrink-0 ml-4">
-                      {project.tech} / {project.year}
-                    </span>
-                  </div>
-                  <p className="text-xs text-muted font-mono leading-relaxed">
-                    {project.tagline}
-                  </p>
 
-                  <DrawingLine
-                    direction="horizontal"
-                    className="bottom-0 left-0 text-border/20"
-                    animate={isInitial}
-                    delay={0.12 + (i + 1) * 0.06}
-                    duration={0.8}
-                  />
-                </motion.div>
-              ))
+                      <ArrowUpRight
+                        size={13}
+                        className="text-link opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] flex-shrink-0"
+                      />
+
+                      <span className="text-[11px] text-muted font-mono flex-shrink-0 ml-auto">
+                        {project.tech} / {project.year}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-muted font-mono leading-relaxed pl-8">
+                      {project.tagline}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1.5 mt-2.5 pl-8">
+                      {project.tags.map(tag => (
+                        <span
+                          key={tag}
+                          className="text-[9px] uppercase font-mono text-muted/70 border border-border/20 rounded-sm px-1.5 py-0.5"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             )}
           </AnimatePresence>
         </div>

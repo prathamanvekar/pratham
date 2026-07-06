@@ -1,6 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { flushSync } from 'react-dom';
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion, MotionConfig } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -216,7 +216,8 @@ function App() {
     const isFirefox = ua.includes('firefox');
     const isZen = ua.includes('zen');
     const isMobileAgent = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua);
-    const shouldDisableTransition = isMobile || isMobileAgent || isFirefox || isZen;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const shouldDisableTransition = isMobile || isMobileAgent || isFirefox || isZen || prefersReducedMotion;
 
     // Safe fallback / lowkey theme toggle if view transitions are unsupported, disabled, or if event context is missing
     if (
@@ -538,9 +539,11 @@ function App() {
     isAnimating.current = true;
     setActiveIndex(nextIndex);
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     gsap.to(sectionsRef.current, {
       xPercent: -100 * nextIndex / 3,
-      duration: 0.8,
+      duration: prefersReducedMotion ? 0 : 0.8,
       ease: 'power2.inOut',
       onComplete: () => {
         isAnimating.current = false;
@@ -759,6 +762,7 @@ function App() {
   const pageKey = currentPage === 'project' ? `project-${currentProject}` : currentPage;
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="bg-bg text-text min-h-screen overflow-hidden font-mono selection:bg-accent selection:text-bg relative z-0">
       <div className="fixed inset-0 w-screen h-screen pointer-events-none z-0 overflow-hidden select-none">
         <DotGrid
@@ -775,7 +779,7 @@ function App() {
           <Loader />
         </div>
       ) : (
-        <div ref={mainContentRef} className="opacity-0">
+        <div ref={mainContentRef} className="opacity-0 relative z-10">
           <Navbar
             scrollToSection={scrollToSection}
             theme={theme}
@@ -897,6 +901,7 @@ function App() {
         </div>
       )}
     </div>
+    </MotionConfig>
   );
 }
 

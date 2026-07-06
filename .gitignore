@@ -29,6 +29,10 @@ dist-ssr
 
 # Claude IDE files
 .claude/
+.impeccable/
+screenshots
+DESIGN.md
+PRODUCT.md
 
 # Installers accidentally dropped in assets
 *.exe

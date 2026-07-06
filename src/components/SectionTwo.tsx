@@ -113,7 +113,6 @@ const SectionTwo = () => {
           const cachedFeatured = localStorage.getItem('github_featured_repos');
 
           if (cachedStats && cachedCalendar && cachedLangs && cachedFeatured) {
-            console.log('Using cached GitHub metrics.');
             return;
           }
         }
@@ -255,9 +254,8 @@ const SectionTwo = () => {
 
         // Set fetch timestamp
         localStorage.setItem('github_last_fetch', Date.now().toString());
-        console.log('GitHub metrics updated and cached successfully.');
-      } catch (err) {
-        console.error('Failed to fetch live GitHub metrics:', err);
+      } catch {
+        // Fallback/cached stats already populate state; fail silently.
       }
     };
 

@@ -606,7 +606,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 .sm-scope .sm-panel-itemLabel { display: inline-block; will-change: transform; transform-origin: 50% 100%; }
 .sm-scope .sm-panel-item:hover { color: var(--color-link); }
 .sm-scope .sm-panel-list[data-numbering] { counter-reset: smItem; }
-.sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after { counter-increment: smItem; content: counter(smItem, decimal-leading-zero); position: absolute; top: 0.15em; right: 2.8em; font-size: 11px; font-weight: 400; color: var(--color-link); letter-spacing: 0; pointer-events: none; user-select: none; opacity: var(--sm-num-opacity, 0); font-family: "Space Mono", monospace; }
+.sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after { counter-increment: smItem; content: counter(smItem, decimal-leading-zero); position: absolute; top: 0.15em; right: 2.8em; font-size: 11px; font-weight: 400; color: var(--color-link); letter-spacing: 0; pointer-events: none; user-select: none; opacity: var(--sm-num-opacity, 0); font-family: var(--font-mono); }
 @media (max-width: 1024px) { 
   .sm-scope .staggered-menu-panel { width: 100vw; left: 0; right: 0; border-left: none; }
   .sm-scope .sm-prelayers { width: 100vw; left: 0; right: 0; }

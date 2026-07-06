@@ -168,7 +168,7 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>((p
       ref={ref}
       style={{
         display: 'inline-block',
-        fontFamily: '"Space Mono", monospace',
+        fontFamily: 'var(--font-mono)',
         ...style
       }}
       className={className}
@@ -390,10 +390,10 @@ const SectionOne = ({ onNavigateProject }: SectionOneProps) => {
 
             <div className="font-mono text-xs md:text-sm">
               <div className="flex justify-between items-baseline mb-1">
-                <span className="text-text">qriocity pvt ltd</span>
+                <span className="text-text font-bold">qriocity pvt ltd</span>
                 <span className="text-xs text-muted">jan 26 - mar 26</span>
               </div>
-              <span className="text-xs text-muted block mb-1">machine learning developer</span>
+              <span className="text-xs text-muted italic block mb-1">machine learning developer</span>
               <p className="text-muted text-xs leading-relaxed">
                 designed, trained, and deployed end-to-end deep learning models and scalable fastapi inference systems for complex multi-domain ai pipelines.
               </p>
